@@ -1,0 +1,36 @@
+{
+    "name": "douglasgreen/simple-universal-syntax",
+    "description": "A file to read a simple universal syntax and write other languages",
+    "license": "MIT",
+    "type": "project",
+    "autoload": {
+        "files": [
+            "src/Exceptions.php"
+        ],
+        "psr-4": {
+            "DouglasGreen\\Syntax\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "douglasgreen/optparser": "^0.6",
+        "phpmd/phpmd": "^2.15",
+        "phpstan/phpstan": "^1.10",
+        "rector/rector": "^1.0",
+        "symplify/easy-coding-standard": "^12.2"
+    },
+    "scripts": {
+        "lint": [
+            "ecs",
+            "rector --dry-run",
+            "./run_phpmd.sh",
+            "./run_phpstan.sh"
+        ],
+        "lint:fix": [
+            "ecs --fix",
+            "rector"
+        ]
+    }
+}
