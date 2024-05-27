@@ -19,7 +19,7 @@ $input = $optParser->parse();
 $isVerbose = (bool) $input->get('verbose');
 
 // Example usage:
-$input = 'select * from Customers; /* Comment */ word "string" 123 { nested; } (word 123) [key: value];';
+$input = 'select * from Customers; /* Comment */ word "string" 123 { nested; } other (word 123) [key: value];';
 $lexer = new Lexer($input, $isVerbose);
 
 $parser = new Parser($lexer, $isVerbose);
