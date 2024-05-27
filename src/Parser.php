@@ -64,17 +64,14 @@ class Parser
         $this->currentToken = $this->lexer->getNextToken();
     }
 
-    /**
-     * @return list<Statement>
-     */
-    public function parse(): array
+    public function parse(): SyntaxTree
     {
         $nodes = [];
         while ($this->currentToken !== null) {
             $nodes[] = $this->parseStatement();
         }
 
-        return $nodes;
+        return new SyntaxTree($nodes);
     }
 
     protected function parseStatement(): Statement
