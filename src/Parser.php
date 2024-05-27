@@ -8,20 +8,6 @@ use DouglasGreen\Syntax\Exceptions\ParseException;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
- *
- * @phpstan-type Token array{type: string, value: string}
- * @phpstan-type Mapping array{type: 'mapping', value: Expression, key: Token}
- * @phpstan-type Map array{type: 'map', mappings: list<Mapping>}
- * @phpstan-type Expression Token|ExprList|Map
- * @phpstan-type ExprList array{type: 'list', expressions: list<Expression>}
- * @phpstan-type Statement array{
- *     type: 'statement',
- *     comment: ?string,
- *     word: Token,
- *     expressions: list<Expression>,
- *     block: ?Block
- * }
- * @phpstan-type Block array{type: 'block', statements: list<Statement>}
  */
 class Parser
 {
@@ -52,16 +38,16 @@ class Parser
             throw new ParseException('Out of tokens');
         }
 
-        if ($this->currentToken['type'] !== $tokenType) {
+        if ($this->currentToken->type !== $tokenType) {
             throw new ParseException('Unexpected token type: ' . json_encode($this->currentToken));
         }
 
         if ($value !== null) {
-            if (is_string($value) && $this->currentToken['value'] !== $value) {
+            if (is_string($value) && $this->currentToken->value !== $value) {
                 throw new ParseException('Unexpected token literal: ' . json_encode($this->currentToken));
             }
 
-            if (is_array($value) && ! in_array($this->currentToken['value'], $value, true)) {
+            if (is_array($value) && ! in_array($this->currentToken->value, $value, true)) {
                 throw new ParseException('Unexpected token value: ' . json_encode($this->currentToken));
             }
         }
@@ -69,7 +55,7 @@ class Parser
         if ($this->isVerbose) {
             echo 'Parsing ' . $tokenType;
             if ($value !== null) {
-                echo ': ' . $this->currentToken['value'];
+                echo ': ' . $this->currentToken->value;
             }
 
             echo "\n";
@@ -91,10 +77,7 @@ class Parser
         return $nodes;
     }
 
-    /**
-     * @return Statement
-     */
-    protected function parseStatement(): array
+    protected function parseStatement(): Statement
     {
         if ($this->isVerbose) {
             echo "Parsing statement\n";
@@ -104,40 +87,33 @@ class Parser
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'statement',
-        ];
-
-        $node['comment'] = null;
-        if ($this->currentToken['type'] === 'comment') {
-            $node['comment'] = $this->parseComment();
+        $comment = null;
+        if ($this->currentToken->type === 'comment') {
+            $comment = $this->parseComment();
         }
 
-        $node['word'] = $this->parseWord();
+        $word = $this->parseWord();
 
-        $node['expressions'] = [];
-        $node['block'] = null;
+        $expressions = [];
+        $block = null;
         while ($this->currentToken !== null) {
-            if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === ';') {
+            if ($this->currentToken->type === 'mark' && $this->currentToken->value === ';') {
                 $this->eat('mark', ';');
                 break;
             }
 
-            if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === '{') {
-                $node['block'] = $this->parseBlock();
+            if ($this->currentToken->type === 'mark' && $this->currentToken->value === '{') {
+                $block = $this->parseBlock();
                 break;
             }
 
-            $node['expressions'][] = $this->parseExpression();
+            $expressions[] = $this->parseExpression();
         }
 
-        return $node;
+        return new Statement($comment, $word, $expressions, $block);
     }
 
-    /**
-     * @return Expression
-     */
-    protected function parseExpression(): array
+    protected function parseExpression(): Expression
     {
         if ($this->isVerbose) {
             echo "Parsing expression\n";
@@ -147,25 +123,25 @@ class Parser
             throw new ParseException('Out of tokens');
         }
 
-        switch ($this->currentToken['type']) {
+        switch ($this->currentToken->type) {
             case 'word':
-                return $this->parseWord();
+                return new Expression($this->parseWord());
             case 'number':
-                return $this->parseNumber();
+                return new Expression($this->parseNumber());
             case 'string':
-                return $this->parseString();
+                return new Expression($this->parseString());
             case 'mark':
-                if ($this->currentToken['value'] === '(') {
-                    return $this->parseList();
+                if ($this->currentToken->value === '(') {
+                    return new Expression($this->parseList());
                 }
 
-                if ($this->currentToken['value'] === '[') {
-                    return $this->parseMap();
+                if ($this->currentToken->value === '[') {
+                    return new Expression($this->parseMap());
                 }
 
                 $usedMarks = ['"', '{', '}', '(', ')', '[', ']', ';'];
-                if (! in_array($this->currentToken['value'], $usedMarks, true)) {
-                    return $this->parseOtherMark();
+                if (! in_array($this->currentToken->value, $usedMarks, true)) {
+                    return new Expression($this->parseOtherMark());
                 }
                 // no break
             default:
@@ -173,10 +149,7 @@ class Parser
         }
     }
 
-    /**
-     * @return Block
-     */
-    protected function parseBlock(): array
+    protected function parseBlock(): Block
     {
         if ($this->isVerbose) {
             echo "Parsing block\n";
@@ -186,28 +159,22 @@ class Parser
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'block',
-            'statements' => [],
-        ];
+        $statements = [];
         $this->eat('mark', '{');
 
         while ($this->currentToken !== null) {
-            if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === '}') {
+            if ($this->currentToken->type === 'mark' && $this->currentToken->value === '}') {
                 $this->eat('mark', '}');
                 break;
             }
 
-            $node['statements'][] = $this->parseStatement();
+            $statements[] = $this->parseStatement();
         }
 
-        return $node;
+        return new Block($statements);
     }
 
-    /**
-     * @return ExprList
-     */
-    protected function parseList(): array
+    protected function parseList(): ExprList
     {
         if ($this->isVerbose) {
             echo "Parsing list\n";
@@ -217,28 +184,22 @@ class Parser
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'list',
-            'expressions' => [],
-        ];
-
+        $expressions = [];
         $this->eat('mark', '(');
+
         while ($this->currentToken !== null) {
-            if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === ')') {
+            if ($this->currentToken->type === 'mark' && $this->currentToken->value === ')') {
                 $this->eat('mark', ')');
                 break;
             }
 
-            $node['expressions'][] = $this->parseExpression();
+            $expressions[] = $this->parseExpression();
         }
 
-        return $node;
+        return new ExprList($expressions);
     }
 
-    /**
-     * @return Map
-     */
-    protected function parseMap(): array
+    protected function parseMap(): ExprMap
     {
         if ($this->isVerbose) {
             echo "Parsing map\n";
@@ -248,28 +209,22 @@ class Parser
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'map',
-            'mappings' => [],
-        ];
-
+        $mappings = [];
         $this->eat('mark', '[');
+
         while ($this->currentToken !== null) {
-            if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === ']') {
+            if ($this->currentToken->type === 'mark' && $this->currentToken->value === ']') {
                 $this->eat('mark', ']');
                 break;
             }
 
-            $node['mappings'][] = $this->parseMapping();
+            $mappings[] = $this->parseMapping();
         }
 
-        return $node;
+        return new ExprMap($mappings);
     }
 
-    /**
-     * @return Mapping
-     */
-    protected function parseMapping(): array
+    protected function parseMapping(): Mapping
     {
         if ($this->isVerbose) {
             echo "Parsing mapping\n";
@@ -279,99 +234,65 @@ class Parser
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'mapping',
-            'key' => $this->parseWord(),
-        ];
-
+        $token = $this->parseWord();
         $this->eat('mark', ':');
-        $node['value'] = $this->parseExpression();
+        $expression = $this->parseExpression();
 
-        return $node;
+        return new Mapping($token, $expression);
     }
 
-    /**
-     * @return Token
-     */
-    protected function parseComment(): array
+    protected function parseComment(): Token
     {
         if ($this->currentToken === null) {
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'comment',
-            'value' => $this->currentToken['value'],
-        ];
+        $value = $this->currentToken->value;
         $this->eat('comment');
-        return $node;
+        return new Token('comment', $value);
     }
 
-    /**
-     * @return Token
-     */
-    protected function parseNumber(): array
+    protected function parseNumber(): Token
     {
         if ($this->currentToken === null) {
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'number',
-            'value' => $this->currentToken['value'],
-        ];
+        $value = $this->currentToken->value;
         $this->eat('number');
-        return $node;
+        return new Token('number', $value);
     }
 
-    /**
-     * @return Token
-     */
-    protected function parseOtherMark(): array
+    protected function parseOtherMark(): Token
     {
         if ($this->currentToken === null) {
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'other',
-            'value' => $this->currentToken['value'],
-        ];
+        $value = $this->currentToken->value;
         $this->eat('mark');
-        return $node;
+        return new Token('other', $value);
     }
 
-    /**
-     * @return Token
-     */
-    protected function parseString(): array
+    protected function parseString(): Token
     {
         if ($this->currentToken === null) {
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'string',
-            'value' => $this->currentToken['value'],
-        ];
+        $value = $this->currentToken->value;
         $this->eat('string');
-        return $node;
+        return new Token('string', $value);
     }
 
-    /**
-     * @return Token
-     */
-    protected function parseWord(): array
+    protected function parseWord(): Token
     {
         if ($this->currentToken === null) {
             throw new ParseException('Out of tokens');
         }
 
-        $node = [
-            'type' => 'word',
-            'value' => $this->currentToken['value'],
-        ];
+        $value = $this->currentToken->value;
         $this->eat('word');
-        return $node;
+        return new Token('word', $value);
     }
 }

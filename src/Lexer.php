@@ -9,7 +9,7 @@ use DouglasGreen\Syntax\Exceptions\RegexException;
 class Lexer
 {
     /**
-     * @var list<array{type: string, value: string}>
+     * @var list<Token>
      */
     protected array $tokens = [];
 
@@ -53,10 +53,7 @@ class Lexer
             }
 
             $value = $match[$type];
-            $this->tokens[] = [
-                'type' => $type,
-                'value' => $value,
-            ];
+            $this->tokens[] = new Token($type, $value);
             if ($this->isVerbose) {
                 echo sprintf('Token: %s, Value: ', $type);
                 $parts = preg_split("/\n/", $value, -1, PREG_SPLIT_NO_EMPTY);
@@ -70,7 +67,7 @@ class Lexer
     }
 
     /**
-     * @return ?array{type: string, value: string}
+     * @return ?Token
      */
     public function getNextToken()
     {
