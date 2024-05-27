@@ -3,9 +3,9 @@
 A valid file consists of one or more statements.
 
 A statement is an optional comment, followed by a word, followed by zero or more
-expressions, terminated with a semicolon.
+expressions, terminated with a semicolon or a block.
 
-An expression is a word, number, string, block, list, map, or other mark.
+An expression is a word, number, string, list, map, or other mark.
 
 A block is a left curly brace, followed by one or more statements, followed by a
 right curly brace.
@@ -41,7 +41,19 @@ select * from Customers where (and (eq country Mexico) (like cus_name "J%"));
 ```
 if (eq x 1) {
     (print y)
-};
+}
+
+do while (less x 10) {
+    print (inc x);
+}
+
+while (more y 10) {
+    print (dec y);
+}
+
+until (more y 10) {
+    print (dec  y);
+}
 
 class (abstract) [extends: Super implements: MyInterface] {
     int (protected) x;
@@ -51,6 +63,6 @@ class (abstract) [extends: Super implements: MyInterface] {
         set (this y) y;
         set z (plus x y);
         return z;
-    };
-};
+    }
+}
 ```

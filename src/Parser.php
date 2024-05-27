@@ -10,17 +10,18 @@ use DouglasGreen\Syntax\Exceptions\ParseException;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  *
  * @phpstan-type Token array{type: string, value: string}
- * @phpstan-type Mapping array{type: 'mapping', value: string, key: Token}
+ * @phpstan-type Mapping array{type: 'mapping', value: Expression, key: Token}
  * @phpstan-type Map array{type: 'map', mappings: list<Mapping>}
+ * @phpstan-type Expression Token|ExprList|Map
+ * @phpstan-type ExprList array{type: 'list', expressions: list<Expression>}
  * @phpstan-type Statement array{
  *     type: 'statement',
  *     comment: ?string,
  *     word: Token,
- *     expressions: list<Expression>
+ *     expressions: list<Expression>,
+ *     block: ?Block
  * }
  * @phpstan-type Block array{type: 'block', statements: list<Statement>}
- * @phpstan-type Expression Token|Block|List|Map
- * @phpstan-type List array{type: 'list', expressions: list<Expression>}
  */
 class Parser
 {
@@ -78,7 +79,7 @@ class Parser
     }
 
     /**
-     * @return list<array<string, mixed>>
+     * @return list<Statement>
      */
     public function parse(): array
     {
@@ -115,15 +116,20 @@ class Parser
         $node['word'] = $this->parseWord();
 
         $node['expressions'] = [];
+        $node['block'] = null;
         while ($this->currentToken !== null) {
             if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === ';') {
+                $this->eat('mark', ';');
+                break;
+            }
+
+            if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === '{') {
+                $node['block'] = $this->parseBlock();
                 break;
             }
 
             $node['expressions'][] = $this->parseExpression();
         }
-
-        $this->eat('mark', ';');
 
         return $node;
     }
@@ -149,10 +155,6 @@ class Parser
             case 'string':
                 return $this->parseString();
             case 'mark':
-                if ($this->currentToken['value'] === '{') {
-                    return $this->parseBlock();
-                }
-
                 if ($this->currentToken['value'] === '(') {
                     return $this->parseList();
                 }
@@ -192,18 +194,18 @@ class Parser
 
         while ($this->currentToken !== null) {
             if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === '}') {
+                $this->eat('mark', '}');
                 break;
             }
 
             $node['statements'][] = $this->parseStatement();
         }
 
-        $this->eat('mark', '}');
         return $node;
     }
 
     /**
-     * @return List
+     * @return ExprList
      */
     protected function parseList(): array
     {
@@ -223,13 +225,13 @@ class Parser
         $this->eat('mark', '(');
         while ($this->currentToken !== null) {
             if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === ')') {
+                $this->eat('mark', ')');
                 break;
             }
 
             $node['expressions'][] = $this->parseExpression();
         }
 
-        $this->eat('mark', ')');
         return $node;
     }
 
@@ -254,13 +256,13 @@ class Parser
         $this->eat('mark', '[');
         while ($this->currentToken !== null) {
             if ($this->currentToken['type'] === 'mark' && $this->currentToken['value'] === ']') {
+                $this->eat('mark', ']');
                 break;
             }
 
             $node['mappings'][] = $this->parseMapping();
         }
 
-        $this->eat('mark', ']');
         return $node;
     }
 
