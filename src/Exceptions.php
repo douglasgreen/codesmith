@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DouglasGreen\Template\Exceptions;
+namespace DouglasGreen\Syntax\Exceptions;
 
 // Base class for program exceptions
 abstract class BaseException extends \Exception {}
