@@ -20,6 +20,47 @@ expression.
 An other mark is a punctuation mark not used to mark a string, block, list, or
 map.
 
+## HTML Example
+
+```
+head {
+    title "My Example";
+}
+body {
+    div {
+        p [class: bold] "This is a test";
+    }
+}
+```
+
+## CSS Example
+
+```
+/* class selector */
+class bold [
+    font_weight: bold
+    color: red
+];
+
+/* id selector */
+id header [
+    text_size: 26px
+    font_weight: bold
+];
+
+/* arbitrary selector */
+select ".class1.class2" [
+    color: yellow
+];
+
+/* media query */
+media (and screen [min_width: 480px]) {
+    tag body [
+        background_color: blue
+    ];
+}
+```
+
 ## SQL Example
 
 ```
