@@ -25,11 +25,11 @@ class Lexer
     protected function tokenize(): void
     {
         $pattern = '%
-            (?P<word>\b[a-zA-Z_]\w*\b) |   # Word tokens
-            (?P<number>\b\d[\d_]*\b) |     # Numeric tokens
-            (?P<string>"(?:\\"|[^"])*") |  # String tokens
-            (?P<comment>/\*.*?\*/) |       # Comment tokens
-            (?P<mark>[^\w\s])              # Punctuation tokens
+            (?P<word>\\b[a-zA-Z_]\\w*\\b) | # Word tokens
+            (?P<number>\\b\\d[\\d_]*\\b) |  # Numeric tokens
+            (?P<string>"(?:\\\\.|[^"])*") | # String tokens
+            (?P<comment>/\\*.*?\\*/) |      # Comment tokens
+            (?P<mark>[^\\w\\s])             # Punctuation tokens
         %xs';
 
         $result = preg_match_all($pattern, $this->input, $matches, PREG_SET_ORDER);

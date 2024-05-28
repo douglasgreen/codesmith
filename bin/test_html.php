@@ -30,28 +30,6 @@ $sampleHtml = <<<HTML_WRAP
         <meta name="description" content="A sample HTML file using different tags and attributes">
         <title>Sample HTML Document</title>
         <link rel="stylesheet" href="styles.css">
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 20px;
-            }
-            header, footer {
-                background-color: #f8f8f8;
-                padding: 10px;
-                text-align: center;
-            }
-            nav a {
-                margin: 0 10px;
-                text-decoration: none;
-                color: #333;
-            }
-            article {
-                margin-top: 20px;
-            }
-            section {
-                margin-bottom: 20px;
-            }
-        </style>
     </head>
     <body>
         <header>
@@ -130,9 +108,6 @@ $sampleHtml = <<<HTML_WRAP
         <footer>
             <p>&copy; 2024 My Website. All rights reserved.</p>
         </footer>
-        <script>
-            console.log('This is a sample script');
-        </script>
     </body>
     </html>
     HTML_WRAP;
@@ -143,7 +118,15 @@ if ($isVerbose) {
 
 $input = <<<TXT
     doctype html;
-    html [lang: en];
+    html [lang: en] {
+        head {
+            meta [charset: "UTF-8"];
+            meta [name: viewport content: "width: device-width, initial-scale: 1.0"];
+            meta [name: description content: "A sample HTML file using different tags and attributes"];
+            title "Sample HTML Document";
+            link [rel: stylesheet href: "styles.css"];
+        }
+    }
     TXT;
 
 $lexer = new Lexer($input, $isVerbose);
