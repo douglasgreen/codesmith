@@ -6,8 +6,6 @@ namespace DouglasGreen\Syntax;
 
 class ExprMap
 {
-    public string $type = 'map';
-
     /**
      * @param array<Mapping> $mappings
      */

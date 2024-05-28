@@ -6,8 +6,6 @@ namespace DouglasGreen\Syntax;
 
 class Statement
 {
-    public string $type = 'statement';
-
     /**
      * @param array<Expression> $expressions
      */

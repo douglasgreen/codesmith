@@ -6,8 +6,6 @@ namespace DouglasGreen\Syntax;
 
 class ExprList
 {
-    public string $type = 'list';
-
     /**
      * @param array<Expression> $expressions
      */

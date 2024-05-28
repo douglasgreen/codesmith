@@ -6,8 +6,6 @@ namespace DouglasGreen\Syntax;
 
 class Block
 {
-    public string $type = 'block';
-
     /**
      * @param array<Statement> $statements
      */
