@@ -10,12 +10,13 @@ To set up the project, run:
 script/setup
 ```
 
-## Linting and Fixing
+## Linting, Fixing and Testing
 
 ### PHP
 
 -   Lint: `composer lint`
 -   Fix: `composer lint:fix`
+-   Test: `composer test`
 
 ### JavaScript
 
