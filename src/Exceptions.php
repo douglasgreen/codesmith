@@ -17,13 +17,6 @@ abstract class BaseException extends \Exception {}
 class DataException extends BaseException {}
 
 /**
- * Thrown when an ID is duplicated when it should be unique
- * Example: Attempting to insert a user with an ID that already exists in the
- * database.
- */
-class DuplicateValueException extends DataException {}
-
-/**
  * Thrown for JSON-related errors
  * Example: Malformed JSON input, failed JSON encoding/decoding.
  *
@@ -49,6 +42,7 @@ class UrlException extends DataException {}
  * Thrown when numeric input is out of range or not an accepted value
  * - A value for age is provided as -5, which is not valid.
  * - A value is not found on an enumerated list of accepted values.
+ * - A value like an ID was duplicated when it should be unique.
  */
 class ValueException extends DataException {}
 
@@ -71,13 +65,6 @@ class DatabaseException extends BaseException {}
  * Example: Unable to connect to the database due to incorrect credentials.
  */
 class DatabaseConnectionException extends DatabaseException {}
-
-/**
- * Thrown for integrity constraint violations
- * Example: Attempting to delete a record that is referenced by a foreign key in
- * another table.
- */
-class DatabaseIntegrityException extends DatabaseException {}
 
 /**
  * Base class for query-related errors.
@@ -114,7 +101,7 @@ class DirectoryException extends FileException {}
  * Used for issues related to logical operations and general action failures in
  * the program.
  */
-class LogicException extends BaseException {}
+class BadLogicException extends BaseException {}
 
 /**
  * Exception for accessing an invalid key or index in an array or collection or
@@ -122,14 +109,14 @@ class LogicException extends BaseException {}
  * Example: Attempting to access an array element with a non-existent key, or
  * trying to perform an invalid operation on an array.
  */
-class ArrayException extends LogicException {}
+class ArrayException extends BadLogicException {}
 
 /**
  * Exception for invalid arguments passed to a method.
  * Example: A method expects a non-null string argument, but receives null or an
  * integer.
  */
-class InvalidArgumentException extends LogicException {}
+class BadArgumentException extends BadLogicException {}
 
 /**
  * Thrown when operations such as function calls are done in the wrong order.
@@ -137,13 +124,13 @@ class InvalidArgumentException extends LogicException {}
  * calling a function that depends on another function that hasn't been executed
  * yet.
  */
-class OrderException extends LogicException {}
+class OrderException extends BadLogicException {}
 
 /**
  * Thrown when unable to parse a string.
  * Example: Failure to parse a date string, invalid JSON or XML string parsing.
  */
-class ParseException extends LogicException {}
+class ParseException extends BadLogicException {}
 
 /**
  * Thrown when a regex returns false when applied due to being malformed.
@@ -152,7 +139,7 @@ class ParseException extends LogicException {}
  *
  * @see https://www.php.net/manual/en/ref.pcre.php
  */
-class RegexException extends LogicException {}
+class RegexException extends BadLogicException {}
 
 /**
  * Base class for general program errors.

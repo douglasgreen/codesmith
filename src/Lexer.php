@@ -22,6 +22,9 @@ class Lexer
         $this->tokenize();
     }
 
+    /**
+     * @throws RegexException
+     */
     protected function tokenize(): void
     {
         $pattern = '%

@@ -31,6 +31,8 @@ class Parser
 
     /**
      * @param string|list<string> $value
+     *
+     * @throws ParseException
      */
     protected function eat(string $tokenType, string|array $value = null): void
     {
@@ -74,6 +76,9 @@ class Parser
         return new SyntaxTree($nodes);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseStatement(): Statement
     {
         if ($this->isVerbose) {
@@ -110,6 +115,9 @@ class Parser
         return new Statement($comment, $word, $expressions, $block);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseExpression(): Expression
     {
         if ($this->isVerbose) {
@@ -146,6 +154,9 @@ class Parser
         }
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseBlock(): Block
     {
         if ($this->isVerbose) {
@@ -171,6 +182,9 @@ class Parser
         return new Block($statements);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseList(): ExprList
     {
         if ($this->isVerbose) {
@@ -196,6 +210,9 @@ class Parser
         return new ExprList($expressions);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseMap(): ExprMap
     {
         if ($this->isVerbose) {
@@ -221,6 +238,9 @@ class Parser
         return new ExprMap($mappings);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseMapping(): Mapping
     {
         if ($this->isVerbose) {
@@ -238,6 +258,9 @@ class Parser
         return new Mapping($token, $expression);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseComment(): Token
     {
         if ($this->currentToken === null) {
@@ -249,6 +272,9 @@ class Parser
         return new Token('comment', $value);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseNumber(): Token
     {
         if ($this->currentToken === null) {
@@ -260,6 +286,9 @@ class Parser
         return new Token('number', $value);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseOtherMark(): Token
     {
         if ($this->currentToken === null) {
@@ -271,6 +300,9 @@ class Parser
         return new Token('other', $value);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseString(): Token
     {
         if ($this->currentToken === null) {
@@ -282,6 +314,9 @@ class Parser
         return new Token('string', $value);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseWord(): Token
     {
         if ($this->currentToken === null) {
