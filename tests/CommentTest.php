@@ -9,72 +9,71 @@ use PHPUnit\Framework\TestCase;
 
 class CommentTest extends TestCase
 {
-    public function testSingleLineComment()
+    public function testSingleLineComment(): void
     {
         $commentText = '/* This is a single line comment */';
         $comment = new Comment($commentText);
-        
+
         $expected = ['This is a single line comment'];
-        $this->assertEquals($expected, $comment->getLines());
+        $this->assertSame($expected, $comment->getLines());
     }
 
-    public function testMultiLineComment()
+    public function testMultiLineComment(): void
     {
         $commentText = <<<EOD
-/*
- * This is a
- * multiline comment
- */
-EOD;
+            /*
+             * This is a
+             * multiline comment
+             */
+            EOD;
         $comment = new Comment($commentText);
-        
+
         $expected = ['This is a', 'multiline comment'];
-        $this->assertEquals($expected, $comment->getLines());
+        $this->assertSame($expected, $comment->getLines());
     }
 
-    public function testDocBlockComment()
+    public function testDocBlockComment(): void
     {
         $commentText = <<<EOD
-/**
- * This is a docblock comment.
- * It has multiple lines.
- *
- * @param string \$param
- * @return void
- */
-EOD;
+            /**
+             * This is a docblock comment.
+             * It has multiple lines.
+             *
+             * @param string \$param
+             * @return void
+             */
+            EOD;
         $comment = new Comment($commentText);
-        
+
         $expected = [
             'This is a docblock comment.',
             'It has multiple lines.',
             '@param string $param',
-            '@return void'
+            '@return void',
         ];
-        $this->assertEquals($expected, $comment->getLines());
+        $this->assertSame($expected, $comment->getLines());
     }
 
-    public function testEmptyComment()
+    public function testEmptyComment(): void
     {
         $commentText = '/** */';
         $comment = new Comment($commentText);
-        
+
         $expected = [];
-        $this->assertEquals($expected, $comment->getLines());
+        $this->assertSame($expected, $comment->getLines());
     }
 
-    public function testCommentWithExtraSpaces()
+    public function testCommentWithExtraSpaces(): void
     {
         $commentText = <<<EOD
-/*
- *    This comment has
- *    extra spaces.
- */
-EOD;
+            /*
+             *    This comment has
+             *    extra spaces.
+             */
+            EOD;
         $comment = new Comment($commentText);
-        
+
         $expected = ['This comment has', 'extra spaces.'];
-        $this->assertEquals($expected, $comment->getLines());
+        $this->assertSame($expected, $comment->getLines());
     }
 }
-
