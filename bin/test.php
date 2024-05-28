@@ -23,8 +23,8 @@ $input = 'select * from Customers; /* Comment */ word "string" 123 { nested; } o
 $lexer = new Lexer($input, $isVerbose);
 
 $parser = new Parser($lexer, $isVerbose);
-$ast = $parser->parse();
+$syntaxTree = $parser->parse();
 
 if ($isVerbose) {
-    echo json_encode($ast, JSON_PRETTY_PRINT);
+    echo json_encode($syntaxTree, JSON_PRETTY_PRINT);
 }

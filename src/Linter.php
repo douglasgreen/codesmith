@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace DouglasGreen\Syntax;
 
-interface LinterInterface
+abstract class Linter
 {
+    public function __construct(
+        protected SyntaxTree $syntaxTree
+    ) {}
+
     /**
      * Run checks on the given SyntaxTree.
      *
      * @return list<string> An array of issues found
      */
-    public function lint(SyntaxTree $syntaxTree): array;
+    abstract public function lint(): array;
 }
