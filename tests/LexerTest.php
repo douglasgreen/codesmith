@@ -33,6 +33,53 @@ class LexerTest extends TestCase
         $this->assertNull($lexer->getNextToken());
     }
 
+    public function testTokenizeDotSeparatedWords(): void
+    {
+        $input = 'this.is.a.dot.separated.word';
+        $lexer = new Lexer($input);
+
+        $token = $lexer->getNextToken();
+        $this->assertInstanceOf(Token::class, $token);
+        $this->assertSame('word', $token->type);
+        $this->assertSame('this.is.a.dot.separated.word', $token->value);
+
+        $this->assertNull($lexer->getNextToken());
+    }
+
+    public function testTokenizeSignedIntegers(): void
+    {
+        $input = '-123 +456';
+        $lexer = new Lexer($input);
+
+        $tokens = [new Token('number', '-123'), new Token('number', '+456')];
+
+        foreach ($tokens as $expectedToken) {
+            $token = $lexer->getNextToken();
+            $this->assertInstanceOf(Token::class, $token);
+            $this->assertSame($expectedToken->type, $token->type);
+            $this->assertSame($expectedToken->value, $token->value);
+        }
+
+        $this->assertNull($lexer->getNextToken());
+    }
+
+    public function testTokenizeFloats(): void
+    {
+        $input = '3.14 -0.5 +2.0e-3';
+        $lexer = new Lexer($input);
+
+        $tokens = [new Token('number', '3.14'), new Token('number', '-0.5'), new Token('number', '+2.0e-3')];
+
+        foreach ($tokens as $expectedToken) {
+            $token = $lexer->getNextToken();
+            $this->assertInstanceOf(Token::class, $token);
+            $this->assertSame($expectedToken->type, $token->type);
+            $this->assertSame($expectedToken->value, $token->value);
+        }
+
+        $this->assertNull($lexer->getNextToken());
+    }
+
     public function testGetNextToken(): void
     {
         $input = 'word';

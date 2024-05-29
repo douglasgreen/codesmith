@@ -28,14 +28,15 @@ class Lexer
     protected function tokenize(): void
     {
         $pattern = '%
-            (?P<word>\\b[a-zA-Z_]\\w*\\b) | # Word tokens
-            (?P<number>\\b\\d[\\d_]*\\b) |  # Numeric tokens
-            (?P<string>"(?:\\\\.|[^"])*") | # String tokens
-            (?P<comment>/\\*.*?\\*/) |      # Comment tokens
-            (?P<mark>[^\\w\\s])             # Punctuation tokens
+            (?P<word>\\b(?:[a-zA-Z_]\\w*\\.)*[a-zA-Z_]\\w*\\b) |
+            (?P<number>[-+]?\\b(?:\\d+\\.?\\d*|\\.\\d+)(?:[eE][-+]?\\d+)?\\b) |
+            (?P<string>"(?:\\\\.|[^"])*") |
+            (?P<comment>/\\*.*?\\*/) |
+            (?P<mark>[^\\w\\s])
         %xs';
 
         $result = preg_match_all($pattern, $this->input, $matches, PREG_SET_ORDER);
+
         if ($result === false) {
             throw new RegexException('Failure to match tokens');
         }
@@ -57,14 +58,15 @@ class Lexer
 
             $value = $match[$type];
             $this->tokens[] = new Token($type, $value);
+
             if ($this->isVerbose) {
                 echo sprintf('Token: %s, Value: ', $type);
-                $parts = preg_split("/\n/", $value, -1, PREG_SPLIT_NO_EMPTY);
+                $parts = preg_split('/\\n/', $value, -1, PREG_SPLIT_NO_EMPTY);
                 if ($parts === false) {
                     throw new RegexException('Unable to split token value');
                 }
 
-                echo implode(' ', $parts) . "\n";
+                echo implode(' ', $parts) . '\\n';
             }
         }
     }
