@@ -1,4 +1,5 @@
 bin
+bootstrap.php
 ecs.php
 rector.php
 src

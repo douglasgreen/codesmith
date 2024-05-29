@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\Syntax;
 
-use DouglasGreen\Syntax\Exceptions\ParseException;
+use DouglasGreen\Exceptions\ParseException;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)

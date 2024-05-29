@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\Syntax;
 
-use DouglasGreen\Syntax\Exceptions\RegexException;
+use DouglasGreen\Exceptions\RegexException;
 
 class Lexer
 {
