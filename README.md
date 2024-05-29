@@ -1,6 +1,6 @@
-# simple-universal-syntax
+# codesmith
 
-A file to read a simple universal syntax and write other languages
+A project to read a simple universal syntax and write other languages.
 
 ## Setup
 
