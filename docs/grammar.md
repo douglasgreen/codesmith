@@ -10,8 +10,10 @@ An expression is a word, number, string, list, map, or other mark.
 A word is an alphanumeric expression starting with a letter. A word can also be
 a series of words separated by dots, like obj.func or Name1.Name2.Name3.
 
-An number is a optionally signed integer or a float with optional exponential
-notation.
+An number is a optionally signed integer or a float optionally followed by:
+- exponential notation (e+/-int)
+- percent (%)
+- unit name (alphabetic)
 
 A block is a left curly brace, followed by one or more statements, followed by a
 right curly brace.

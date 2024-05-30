@@ -80,6 +80,40 @@ class LexerTest extends TestCase
         $this->assertNull($lexer->getNextToken());
     }
 
+    public function testTokenizePercents(): void
+    {
+        $input = '10% -42.3%';
+        $lexer = new Lexer($input);
+
+        $tokens = [new Token('number', '10%'), new Token('number', '-42.3%')];
+
+        foreach ($tokens as $expectedToken) {
+            $token = $lexer->getNextToken();
+            $this->assertInstanceOf(Token::class, $token);
+            $this->assertSame($expectedToken->type, $token->type);
+            $this->assertSame($expectedToken->value, $token->value);
+        }
+
+        $this->assertNull($lexer->getNextToken());
+    }
+
+    public function testTokenizeUnits(): void
+    {
+        $input = '60px 70rem 1.3GB';
+        $lexer = new Lexer($input);
+
+        $tokens = [new Token('number', '60px'), new Token('number', '70rem'), new Token('number', '1.3GB')];
+
+        foreach ($tokens as $expectedToken) {
+            $token = $lexer->getNextToken();
+            $this->assertInstanceOf(Token::class, $token);
+            $this->assertSame($expectedToken->type, $token->type);
+            $this->assertSame($expectedToken->value, $token->value);
+        }
+
+        $this->assertNull($lexer->getNextToken());
+    }
+
     public function testGetNextToken(): void
     {
         $input = 'word';
