@@ -133,6 +133,8 @@ class Parser
                 return new Expression($this->parseWord());
             case 'number':
                 return new Expression($this->parseNumber());
+            case 'hex':
+                return new Expression($this->parseHex());
             case 'string':
                 return new Expression($this->parseString());
             case 'mark':
@@ -270,6 +272,20 @@ class Parser
         $value = $this->currentToken->value;
         $this->eat('comment');
         return new Token('comment', $value);
+    }
+
+    /**
+     * @throws ParseException
+     */
+    protected function parseHex(): Token
+    {
+        if ($this->currentToken === null) {
+            throw new ParseException('Out of tokens');
+        }
+
+        $value = $this->currentToken->value;
+        $this->eat('hex');
+        return new Token('hex', $value);
     }
 
     /**

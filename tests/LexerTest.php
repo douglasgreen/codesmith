@@ -114,6 +114,23 @@ class LexerTest extends TestCase
         $this->assertNull($lexer->getNextToken());
     }
 
+    public function testTokenizeHex(): void
+    {
+        $input = '#0a #A0 #FFFFFF';
+        $lexer = new Lexer($input);
+
+        $tokens = [new Token('hex', '#0a'), new Token('hex', '#A0'), new Token('hex', '#FFFFFF')];
+
+        foreach ($tokens as $expectedToken) {
+            $token = $lexer->getNextToken();
+            $this->assertInstanceOf(Token::class, $token);
+            $this->assertSame($expectedToken->type, $token->type);
+            $this->assertSame($expectedToken->value, $token->value);
+        }
+
+        $this->assertNull($lexer->getNextToken());
+    }
+
     public function testGetNextToken(): void
     {
         $input = 'word';

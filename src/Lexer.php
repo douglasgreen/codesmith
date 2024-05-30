@@ -30,10 +30,13 @@ class Lexer
         // Define the pattern with the extended and dotall flags (allow comments and whitespace, and dot matches newlines)
         $pattern = '%
             # Matches a valid word or series of words separated by dots
-            (?P<word>\\b(?:[a-zA-Z]\\w*\\.)*[a-zA-Z]\\w*\\b) |
+            (?P<word>(?:[a-zA-Z]\\w*\\.)*[a-zA-Z]\\w*) |
 
             # Matches a number with optional sign, decimal, scientific notation, percentage, or unit
             (?P<number>[-+]?\\d+(?:\\.\\d+)?(?:[eE][-+]?\\d+|\\%|[a-zA-Z]+)?) |
+
+            # Matches a hexadecimal number
+            (?P<hex>\#[0-9a-zA-Z]+) |
 
             # Matches a double-quoted string, including escaped characters
             (?P<string>"(?:\\\\.|[^"])*") |
@@ -56,6 +59,8 @@ class Lexer
                 $type = 'word';
             } elseif (! empty($match['number'])) {
                 $type = 'number';
+            } elseif (! empty($match['hex'])) {
+                $type = 'hex';
             } elseif (! empty($match['string'])) {
                 $type = 'string';
             } elseif (! empty($match['comment'])) {
