@@ -8,8 +8,8 @@
             "src/Exceptions.php"
         ],
         "psr-4": {
-            "DouglasGreen\\Syntax\\": "src/",
-            "DouglasGreen\\Syntax\\Tests\\": "tests/"
+            "DouglasGreen\\CodeSmith\\": "src/",
+            "DouglasGreen\\CodeSmith\\Tests\\": "tests/"
         }
     },
     "require": {

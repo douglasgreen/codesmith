@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DouglasGreen\Syntax\Tests;
+namespace DouglasGreen\CodeSmith\Tests;
 
-use DouglasGreen\Syntax\Lexer;
-use DouglasGreen\Syntax\Token;
+use DouglasGreen\CodeSmith\Lexer;
+use DouglasGreen\CodeSmith\Token;
 use PHPUnit\Framework\TestCase;
 
 class LexerTest extends TestCase

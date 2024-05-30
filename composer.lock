@@ -146,16 +146,16 @@
         },
         {
             "name": "douglasgreen/optparser",
-            "version": "0.7.1",
+            "version": "0.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/douglasgreen/optparser.git",
-                "reference": "b20dd9650f7b0085e3db2783f4f2519fc061c190"
+                "reference": "c50d59f36b887138e83c14b0b3609816faee57d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/douglasgreen/optparser/zipball/b20dd9650f7b0085e3db2783f4f2519fc061c190",
-                "reference": "b20dd9650f7b0085e3db2783f4f2519fc061c190",
+                "url": "https://api.github.com/repos/douglasgreen/optparser/zipball/c50d59f36b887138e83c14b0b3609816faee57d1",
+                "reference": "c50d59f36b887138e83c14b0b3609816faee57d1",
                 "shasum": ""
             },
             "require": {
@@ -213,9 +213,9 @@
             ],
             "support": {
                 "issues": "https://github.com/douglasgreen/optparser/issues",
-                "source": "https://github.com/douglasgreen/optparser/tree/0.7.1"
+                "source": "https://github.com/douglasgreen/optparser/tree/0.7.3"
             },
-            "time": "2024-05-28T23:00:18+00:00"
+            "time": "2024-05-29T22:20:24+00:00"
         },
         {
             "name": "myclabs/deep-copy",

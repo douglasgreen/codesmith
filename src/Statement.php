@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DouglasGreen\Syntax;
+namespace DouglasGreen\CodeSmith;
 
 class Statement
 {
@@ -11,7 +11,7 @@ class Statement
      */
     public function __construct(
         public ?Token $comment,
-        public Token $token,
+        public Token $word,
         public array $expressions,
         public ?Block $block
     ) {}

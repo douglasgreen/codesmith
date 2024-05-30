@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DouglasGreen\Syntax\Tests;
+namespace DouglasGreen\CodeSmith\Tests;
 
-use DouglasGreen\Syntax\Comment;
+use DouglasGreen\CodeSmith\Comment;
 use PHPUnit\Framework\TestCase;
 
 class CommentTest extends TestCase

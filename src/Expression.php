@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DouglasGreen\Syntax;
+namespace DouglasGreen\CodeSmith;
 
 class Expression
 {

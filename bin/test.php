@@ -5,11 +5,11 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use DouglasGreen\CodeSmith\Lexer;
+use DouglasGreen\CodeSmith\Parser;
 use DouglasGreen\OptParser\OptParser;
-use DouglasGreen\Syntax\Lexer;
-use DouglasGreen\Syntax\Parser;
 
-$optParser = new OptParser('Simple Universal Syntax', 'Test program');
+$optParser = new OptParser('CodeSmith', 'Test program');
 
 $optParser->addFlag(['verbose', 'v'], 'Verbose output')
     ->addUsageAll();
