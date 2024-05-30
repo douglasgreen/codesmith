@@ -112,10 +112,6 @@ $sampleHtml = <<<HTML_WRAP
     </html>
     HTML_WRAP;
 
-if ($isVerbose) {
-    echo $sampleHtml . "\n";
-}
-
 $input = <<<TXT
     doctype html;
     html [lang: en] {

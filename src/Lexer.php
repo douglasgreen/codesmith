@@ -55,23 +55,30 @@ class Lexer
         }
 
         foreach ($matches as $match) {
-            if (! empty($match['word'])) {
+            // Trim the junk from the match array.
+            $result = array_filter(
+                $match,
+                static fn($value, $key): bool => ! is_numeric($key) && strlen($value) > 0,
+                ARRAY_FILTER_USE_BOTH
+            );
+
+            if (isset($result['word'])) {
                 $type = 'word';
-            } elseif (! empty($match['number'])) {
+            } elseif (isset($result['number'])) {
                 $type = 'number';
-            } elseif (! empty($match['hex'])) {
+            } elseif (isset($result['hex'])) {
                 $type = 'hex';
-            } elseif (! empty($match['string'])) {
+            } elseif (isset($result['string'])) {
                 $type = 'string';
-            } elseif (! empty($match['comment'])) {
+            } elseif (isset($result['comment'])) {
                 $type = 'comment';
-            } elseif (! empty($match['mark'])) {
+            } elseif (isset($result['mark'])) {
                 $type = 'mark';
             } else {
-                throw new RegexException('Unrecognized token type');
+                throw new RegexException('Unrecognized token type: ' . json_encode($result));
             }
 
-            $value = $match[$type];
+            $value = $result[$type];
             $this->tokens[] = new Token($type, $value);
 
             if ($this->isVerbose) {
@@ -81,7 +88,7 @@ class Lexer
                     throw new RegexException('Unable to split token value');
                 }
 
-                echo implode(' ', $parts) . '\\n';
+                echo implode(' ', $parts) . PHP_EOL;
             }
         }
     }
