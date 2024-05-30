@@ -16,7 +16,7 @@ class CssRenderer extends Renderer
         foreach ($this->syntaxTree->statements as $statement) {
             $comment = $statement->comment;
             if ($comment !== null) {
-                echo $comment->value . "\n";
+                echo $comment->value . PHP_EOL;
             }
 
             $word = $statement->word;

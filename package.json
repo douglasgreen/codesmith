@@ -1,5 +1,5 @@
 {
-    "name": "douglasgreen/syntax",
+    "name": "douglasgreen/codesmith",
     "description": "A file to read a simple universal syntax and write other languages",
     "license": "MIT",
     "engines": {

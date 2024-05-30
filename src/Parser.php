@@ -60,7 +60,7 @@ class Parser
                 echo ': ' . $this->currentToken->value;
             }
 
-            echo "\n";
+            echo PHP_EOL;
         }
 
         $this->currentToken = $this->lexer->getNextToken();
@@ -82,7 +82,7 @@ class Parser
     protected function parseStatement(): Statement
     {
         if ($this->isVerbose) {
-            echo "Parsing statement\n";
+            echo 'Parsing statement' . PHP_EOL;
         }
 
         if ($this->currentToken === null) {
@@ -121,7 +121,7 @@ class Parser
     protected function parseExpression(): Expression
     {
         if ($this->isVerbose) {
-            echo "Parsing expression\n";
+            echo 'Parsing expression' . PHP_EOL;
         }
 
         if ($this->currentToken === null) {
@@ -162,7 +162,7 @@ class Parser
     protected function parseBlock(): Block
     {
         if ($this->isVerbose) {
-            echo "Parsing block\n";
+            echo 'Parsing block' . PHP_EOL;
         }
 
         if ($this->currentToken === null) {
@@ -190,7 +190,7 @@ class Parser
     protected function parseList(): ExprList
     {
         if ($this->isVerbose) {
-            echo "Parsing list\n";
+            echo 'Parsing list' . PHP_EOL;
         }
 
         if ($this->currentToken === null) {
@@ -218,7 +218,7 @@ class Parser
     protected function parseMap(): ExprMap
     {
         if ($this->isVerbose) {
-            echo "Parsing map\n";
+            echo 'Parsing map' . PHP_EOL;
         }
 
         if ($this->currentToken === null) {
@@ -246,7 +246,7 @@ class Parser
     protected function parseMapping(): Mapping
     {
         if ($this->isVerbose) {
-            echo "Parsing mapping\n";
+            echo 'Parsing mapping' . PHP_EOL;
         }
 
         if ($this->currentToken === null) {
