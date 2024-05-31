@@ -130,7 +130,7 @@ $parser = new Parser($lexer, $isVerbose);
 $syntaxTree = $parser->parse();
 
 if ($isVerbose) {
-    echo json_encode($syntaxTree, JSON_PRETTY_PRINT);
+    echo json_encode($syntaxTree, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
 }
 
 $linter = new HtmlLinter($syntaxTree);

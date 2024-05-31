@@ -6,12 +6,12 @@ namespace DouglasGreen\CodeSmith;
 
 abstract class Renderer
 {
-    public function __construct(
-        protected SyntaxTree $syntaxTree
-    ) {}
-
     /**
      * Render the given SyntaxTree to a string in a target language.
      */
     abstract public function render(): string;
+
+    public function __construct(
+        protected SyntaxTree $syntaxTree
+    ) {}
 }

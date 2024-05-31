@@ -9,26 +9,17 @@ use PHPUnit\Framework\TestCase;
 
 class CommentTest extends TestCase
 {
-    public function testSingleLineComment(): void
-    {
-        $commentText = '/* This is a single line comment */';
-        $comment = new Comment($commentText);
-
-        $expected = ['This is a single line comment'];
-        $this->assertSame($expected, $comment->getLines());
-    }
-
-    public function testMultiLineComment(): void
+    public function testCommentWithExtraSpaces(): void
     {
         $commentText = <<<EOD
             /*
-             * This is a
-             * multiline comment
+             *    This comment has
+             *    extra spaces.
              */
             EOD;
         $comment = new Comment($commentText);
 
-        $expected = ['This is a', 'multiline comment'];
+        $expected = ['This comment has', 'extra spaces.'];
         $this->assertSame($expected, $comment->getLines());
     }
 
@@ -63,17 +54,26 @@ class CommentTest extends TestCase
         $this->assertSame($expected, $comment->getLines());
     }
 
-    public function testCommentWithExtraSpaces(): void
+    public function testMultiLineComment(): void
     {
         $commentText = <<<EOD
             /*
-             *    This comment has
-             *    extra spaces.
+             * This is a
+             * multiline comment
              */
             EOD;
         $comment = new Comment($commentText);
 
-        $expected = ['This comment has', 'extra spaces.'];
+        $expected = ['This is a', 'multiline comment'];
+        $this->assertSame($expected, $comment->getLines());
+    }
+
+    public function testSingleLineComment(): void
+    {
+        $commentText = '/* This is a single line comment */';
+        $comment = new Comment($commentText);
+
+        $expected = ['This is a single line comment'];
         $this->assertSame($expected, $comment->getLines());
     }
 }

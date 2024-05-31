@@ -20,6 +20,14 @@ class Comment
     }
 
     /**
+     * @return list<string>
+     */
+    public function getLines(): array
+    {
+        return $this->lines;
+    }
+
+    /**
      * @throws RegexException
      */
     protected function parseComment(): void
@@ -49,13 +57,5 @@ class Comment
 
         // Filter out empty lines
         $this->lines = array_values(array_filter($processedLines, static fn($line): bool => $line !== ''));
-    }
-
-    /**
-     * @return list<string>
-     */
-    public function getLines(): array
-    {
-        return $this->lines;
     }
 }

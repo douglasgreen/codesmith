@@ -23,6 +23,23 @@ class Lexer
     }
 
     /**
+     * @return ?Token
+     */
+    public function getNextToken()
+    {
+        if ($this->position < count($this->tokens)) {
+            return $this->tokens[$this->position++];
+        }
+
+        return null;
+    }
+
+    public function reset(): void
+    {
+        $this->position = 0;
+    }
+
+    /**
      * @throws RegexException
      */
     protected function tokenize(): void
@@ -91,22 +108,5 @@ class Lexer
                 echo implode(' ', $parts) . PHP_EOL;
             }
         }
-    }
-
-    /**
-     * @return ?Token
-     */
-    public function getNextToken()
-    {
-        if ($this->position < count($this->tokens)) {
-            return $this->tokens[$this->position++];
-        }
-
-        return null;
-    }
-
-    public function reset(): void
-    {
-        $this->position = 0;
     }
 }
