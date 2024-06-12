@@ -108,11 +108,7 @@ class Lexer
 
             if ($this->isVerbose) {
                 echo sprintf('Token: %s, Value: ', $type);
-                $parts = preg_split('/\R/', $value, -1, PREG_SPLIT_NO_EMPTY);
-                if ($parts === false) {
-                    throw new RegexException('Unable to split token value');
-                }
-
+                $parts = Regex::doSplit('/\R/', $value, -1, Regex::NO_EMPTY);
                 echo implode(' ', $parts) . PHP_EOL;
             }
         }

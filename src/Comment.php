@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Exceptions\RegexException;
+use DouglasGreen\Utility\Regex\Regex;
 
 class Comment
 {
@@ -33,24 +33,15 @@ class Comment
     protected function parseComment(): void
     {
         // Split into lines by any line break
-        $lines = preg_split('/\R/', $this->comment);
-        if ($lines === false) {
-            throw new RegexException('Regex error');
-        }
+        $lines = Regex::doSplit('/\R/', $this->comment);
 
         // Process each line
         $processedLines = array_map(static function ($line): string {
             // Remove trailing */ characters
-            $line = preg_replace('#\*/\s*$#', '', $line);
-            if ($line === null) {
-                throw new RegexException('Regex error');
-            }
+            $line = Regex::doReplace('#\*/\s*$#', '', $line);
 
             // Remove leading /*, /**, and * characters
-            $line = preg_replace('#^\s*(/\*\*?|\*)#', '', $line);
-            if ($line === null) {
-                throw new RegexException('Regex error');
-            }
+            $line = Regex::doReplace('#^\s*(/\*\*?|\*)#', '', $line);
 
             return trim($line);
         }, $lines);
