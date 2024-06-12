@@ -17,7 +17,7 @@ class Lexer
 
     public function __construct(
         protected string $input,
-        protected bool $isVerbose = false
+        protected bool $isVerbose = false,
     ) {
         $this->tokenize();
     }
@@ -65,7 +65,12 @@ class Lexer
             (?P<mark>[^\\w\\s])
         %xs';
 
-        $result = preg_match_all($pattern, $this->input, $matches, PREG_SET_ORDER);
+        $result = preg_match_all(
+            $pattern,
+            $this->input,
+            $matches,
+            PREG_SET_ORDER,
+        );
 
         if ($result === false) {
             throw new RegexException('Failure to match tokens');
@@ -75,8 +80,9 @@ class Lexer
             // Trim the junk from the match array.
             $result = array_filter(
                 $match,
-                static fn($value, $key): bool => ! is_numeric($key) && strlen($value) > 0,
-                ARRAY_FILTER_USE_BOTH
+                static fn($value, $key): bool => ! is_numeric($key) &&
+                    strlen($value) > 0,
+                ARRAY_FILTER_USE_BOTH,
             );
 
             if (isset($result['word'])) {
@@ -92,7 +98,9 @@ class Lexer
             } elseif (isset($result['mark'])) {
                 $type = 'mark';
             } else {
-                throw new RegexException('Unrecognized token type: ' . json_encode($result));
+                throw new RegexException(
+                    'Unrecognized token type: ' . json_encode($result),
+                );
             }
 
             $value = $result[$type];

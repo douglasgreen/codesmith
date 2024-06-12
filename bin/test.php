@@ -11,15 +11,15 @@ use DouglasGreen\OptParser\OptParser;
 
 $optParser = new OptParser('CodeSmith', 'Test program');
 
-$optParser->addFlag(['verbose', 'v'], 'Verbose output')
-    ->addUsageAll();
+$optParser->addFlag(['verbose', 'v'], 'Verbose output')->addUsageAll();
 
 $input = $optParser->parse();
 
 $isVerbose = (bool) $input->get('verbose');
 
 // Example usage:
-$input = 'select * from Customers; /* Comment */ word "string" 123 { nested; } other (word 123) [key: value];';
+$input =
+    'select * from Customers; /* Comment */ word "string" 123 { nested; } other (word 123) [key: value];';
 $lexer = new Lexer($input, $isVerbose);
 
 $parser = new Parser($lexer, $isVerbose);

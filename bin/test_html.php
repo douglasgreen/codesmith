@@ -13,8 +13,7 @@ use DouglasGreen\OptParser\OptParser;
 
 $optParser = new OptParser('CodeSmith', 'Test program');
 
-$optParser->addFlag(['verbose', 'v'], 'Verbose output')
-    ->addUsageAll();
+$optParser->addFlag(['verbose', 'v'], 'Verbose output')->addUsageAll();
 
 $input = $optParser->parse();
 

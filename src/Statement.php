@@ -13,6 +13,6 @@ class Statement
         public ?Token $comment,
         public Token $word,
         public array $expressions,
-        public ?Block $block
+        public ?Block $block,
     ) {}
 }

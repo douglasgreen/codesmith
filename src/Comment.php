@@ -56,6 +56,11 @@ class Comment
         }, $lines);
 
         // Filter out empty lines
-        $this->lines = array_values(array_filter($processedLines, static fn($line): bool => $line !== ''));
+        $this->lines = array_values(
+            array_filter(
+                $processedLines,
+                static fn($line): bool => $line !== '',
+            ),
+        );
     }
 }

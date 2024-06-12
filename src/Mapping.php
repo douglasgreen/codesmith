@@ -8,6 +8,6 @@ class Mapping
 {
     public function __construct(
         public Token $token,
-        public Expression $expression
+        public Expression $expression,
     ) {}
 }

@@ -12,7 +12,7 @@ class Parser
 
     public function __construct(
         protected Lexer $lexer,
-        protected bool $isVerbose = false
+        protected bool $isVerbose = false,
     ) {
         $this->currentToken = $this->lexer->getNextToken();
     }
@@ -39,16 +39,27 @@ class Parser
         }
 
         if ($this->currentToken->type !== $tokenType) {
-            throw new ParseException('Unexpected token type: ' . json_encode($this->currentToken));
+            throw new ParseException(
+                'Unexpected token type: ' . json_encode($this->currentToken),
+            );
         }
 
         if ($value !== null) {
             if (is_string($value) && $this->currentToken->value !== $value) {
-                throw new ParseException('Unexpected token literal: ' . json_encode($this->currentToken));
+                throw new ParseException(
+                    'Unexpected token literal: ' .
+                        json_encode($this->currentToken),
+                );
             }
 
-            if (is_array($value) && ! in_array($this->currentToken->value, $value, true)) {
-                throw new ParseException('Unexpected token value: ' . json_encode($this->currentToken));
+            if (
+                is_array($value) &&
+                ! in_array($this->currentToken->value, $value, true)
+            ) {
+                throw new ParseException(
+                    'Unexpected token value: ' .
+                        json_encode($this->currentToken),
+                );
             }
         }
 
@@ -81,7 +92,10 @@ class Parser
         $this->eat('mark', '{');
 
         while ($this->currentToken instanceof Token) {
-            if ($this->currentToken->type === 'mark' && $this->currentToken->value === '}') {
+            if (
+                $this->currentToken->type === 'mark' &&
+                $this->currentToken->value === '}'
+            ) {
                 $this->eat('mark', '}');
                 break;
             }
@@ -143,7 +157,9 @@ class Parser
                 }
                 // no break
             default:
-                throw new ParseException('Unknown expression: ' . json_encode($this->currentToken));
+                throw new ParseException(
+                    'Unknown expression: ' . json_encode($this->currentToken),
+                );
         }
     }
 
@@ -178,7 +194,10 @@ class Parser
         $this->eat('mark', '(');
 
         while ($this->currentToken instanceof Token) {
-            if ($this->currentToken->type === 'mark' && $this->currentToken->value === ')') {
+            if (
+                $this->currentToken->type === 'mark' &&
+                $this->currentToken->value === ')'
+            ) {
                 $this->eat('mark', ')');
                 break;
             }
@@ -206,7 +225,10 @@ class Parser
         $this->eat('mark', '[');
 
         while ($this->currentToken instanceof Token) {
-            if ($this->currentToken->type === 'mark' && $this->currentToken->value === ']') {
+            if (
+                $this->currentToken->type === 'mark' &&
+                $this->currentToken->value === ']'
+            ) {
                 $this->eat('mark', ']');
                 break;
             }
@@ -288,12 +310,18 @@ class Parser
         $expressions = [];
         $block = null;
         while ($this->currentToken instanceof Token) {
-            if ($this->currentToken->type === 'mark' && $this->currentToken->value === ';') {
+            if (
+                $this->currentToken->type === 'mark' &&
+                $this->currentToken->value === ';'
+            ) {
                 $this->eat('mark', ';');
                 break;
             }
 
-            if ($this->currentToken->type === 'mark' && $this->currentToken->value === '{') {
+            if (
+                $this->currentToken->type === 'mark' &&
+                $this->currentToken->value === '{'
+            ) {
                 $block = $this->parseBlock();
                 break;
             }

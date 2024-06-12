@@ -55,7 +55,11 @@ class LexerTest extends TestCase
         $input = '3.14 -0.5 +2.0e-3';
         $lexer = new Lexer($input);
 
-        $tokens = [new Token('number', '3.14'), new Token('number', '-0.5'), new Token('number', '+2.0e-3')];
+        $tokens = [
+            new Token('number', '3.14'),
+            new Token('number', '-0.5'),
+            new Token('number', '+2.0e-3'),
+        ];
 
         foreach ($tokens as $expectedToken) {
             $token = $lexer->getNextToken();
@@ -72,7 +76,11 @@ class LexerTest extends TestCase
         $input = '#0a #A0 #FFFFFF';
         $lexer = new Lexer($input);
 
-        $tokens = [new Token('hex', '#0a'), new Token('hex', '#A0'), new Token('hex', '#FFFFFF')];
+        $tokens = [
+            new Token('hex', '#0a'),
+            new Token('hex', '#A0'),
+            new Token('hex', '#FFFFFF'),
+        ];
 
         foreach ($tokens as $expectedToken) {
             $token = $lexer->getNextToken();
@@ -146,7 +154,11 @@ class LexerTest extends TestCase
         $input = '60px 70rem 1.3GB';
         $lexer = new Lexer($input);
 
-        $tokens = [new Token('number', '60px'), new Token('number', '70rem'), new Token('number', '1.3GB')];
+        $tokens = [
+            new Token('number', '60px'),
+            new Token('number', '70rem'),
+            new Token('number', '1.3GB'),
+        ];
 
         foreach ($tokens as $expectedToken) {
             $token = $lexer->getNextToken();

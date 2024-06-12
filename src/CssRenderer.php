@@ -36,7 +36,9 @@ class CssRenderer extends Renderer
                 if ($expr instanceof Token) {
                     echo $expr->value;
                 } else {
-                    throw new ValueException('Invalid expression: ' . $expr::class);
+                    throw new ValueException(
+                        'Invalid expression: ' . $expr::class,
+                    );
                 }
             }
         }
