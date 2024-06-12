@@ -6,9 +6,6 @@ namespace DouglasGreen\CodeSmith;
 
 use DouglasGreen\Exceptions\ParseException;
 
-/**
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
- */
 class Parser
 {
     protected ?Token $currentToken;
