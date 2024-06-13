@@ -124,8 +124,8 @@ $input = <<<TXT
     }
     TXT;
 
-$lexer = new Lexer($input, $isVerbose);
-$parser = new Parser($lexer, $isVerbose);
+$lexer = new Lexer($input, $isVerbose ? Lexer::IS_VERBOSE : 0);
+$parser = new Parser($lexer, $isVerbose ? Parser::IS_VERBOSE : 0);
 $syntaxTree = $parser->parse();
 
 if ($isVerbose) {

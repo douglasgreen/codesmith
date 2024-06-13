@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Exceptions\ParseException;
+use DouglasGreen\Utility\Process\ParseException;
 
 class Parser
 {
+    public const IS_VERBOSE = 1;
+
     protected ?Token $currentToken;
+
+    protected bool $isVerbose = false;
 
     public function __construct(
         protected Lexer $lexer,
-        protected bool $isVerbose = false,
+        protected int $tokens = 0
     ) {
         $this->currentToken = $this->lexer->getNextToken();
+        $this->isVerbose = (bool) ($this->tokens & self::IS_VERBOSE);
     }
 
     public function parse(): SyntaxTree

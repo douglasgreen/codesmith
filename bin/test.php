@@ -20,9 +20,10 @@ $isVerbose = (bool) $input->get('verbose');
 // Example usage:
 $input =
     'select * from Customers; /* Comment */ word "string" 123 { nested; } other (word 123) [key: value];';
-$lexer = new Lexer($input, $isVerbose);
 
-$parser = new Parser($lexer, $isVerbose);
+$lexer = new Lexer($input, $isVerbose ? Lexer::IS_VERBOSE : 0);
+$parser = new Parser($lexer, $isVerbose ? Parser::IS_VERBOSE : 0);
+
 $syntaxTree = $parser->parse();
 
 if ($isVerbose) {

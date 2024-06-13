@@ -27,9 +27,6 @@ class Comment
         return $this->lines;
     }
 
-    /**
-     * @throws RegexException
-     */
     protected function parseComment(): void
     {
         // Split into lines by any line break
@@ -48,10 +45,7 @@ class Comment
 
         // Filter out empty lines
         $this->lines = array_values(
-            array_filter(
-                $processedLines,
-                static fn($line): bool => $line !== '',
-            ),
+            array_filter($processedLines, static fn($line): bool => $line !== ''),
         );
     }
 }

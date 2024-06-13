@@ -4,22 +4,28 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Exceptions\RegexException;
+use DouglasGreen\Utility\Regex\Regex;
+use DouglasGreen\Utility\Regex\RegexException;
 
 class Lexer
 {
+    public const IS_VERBOSE = 1;
+
     /**
      * @var list<Token>
      */
     protected array $tokens = [];
 
+    protected bool $isVerbose = false;
+
     protected int $position = 0;
 
     public function __construct(
         protected string $input,
-        protected bool $isVerbose = false,
+        protected int $flags = 0
     ) {
         $this->tokenize();
+        $this->isVerbose = (bool) ($this->flags & self::IS_VERBOSE);
     }
 
     /**
@@ -65,12 +71,7 @@ class Lexer
             (?P<mark>[^\\w\\s])
         %xs';
 
-        $result = preg_match_all(
-            $pattern,
-            $this->input,
-            $matches,
-            PREG_SET_ORDER,
-        );
+        $result = preg_match_all($pattern, $this->input, $matches, PREG_SET_ORDER);
 
         if ($result === false) {
             throw new RegexException('Failure to match tokens');
@@ -98,9 +99,7 @@ class Lexer
             } elseif (isset($result['mark'])) {
                 $type = 'mark';
             } else {
-                throw new RegexException(
-                    'Unrecognized token type: ' . json_encode($result),
-                );
+                throw new RegexException('Unrecognized token type: ' . json_encode($result));
             }
 
             $value = $result[$type];

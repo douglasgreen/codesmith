@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Exceptions\ValueException;
+use DouglasGreen\Utility\Data\ValueException;
 
 class CssRenderer extends Renderer
 {
@@ -36,9 +36,7 @@ class CssRenderer extends Renderer
                 if ($expr instanceof Token) {
                     echo $expr->value;
                 } else {
-                    throw new ValueException(
-                        'Invalid expression: ' . $expr::class,
-                    );
+                    throw new ValueException('Invalid expression: ' . $expr::class);
                 }
             }
         }
