@@ -30,15 +30,15 @@ class Comment
     protected function parseComment(): void
     {
         // Split into lines by any line break
-        $lines = Regex::doSplit('/\R/', $this->comment);
+        $lines = Regex::split('/\R/', $this->comment);
 
         // Process each line
         $processedLines = array_map(static function ($line): string {
             // Remove trailing */ characters
-            $line = Regex::doReplace('#\*/\s*$#', '', $line);
+            $line = Regex::replace('#\*/\s*$#', '', $line);
 
             // Remove leading /*, /**, and * characters
-            $line = Regex::doReplace('#^\s*(/\*\*?|\*)#', '', $line);
+            $line = Regex::replace('#^\s*(/\*\*?|\*)#', '', $line);
 
             return trim($line);
         }, $lines);

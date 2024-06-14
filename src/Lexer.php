@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
+use DouglasGreen\Utility\Regex\Matcher;
 use DouglasGreen\Utility\Regex\Regex;
 use DouglasGreen\Utility\Regex\RegexException;
 
@@ -107,7 +108,7 @@ class Lexer
 
             if ($this->isVerbose) {
                 echo sprintf('Token: %s, Value: ', $type);
-                $parts = Regex::doSplit('/\R/', $value, -1, Regex::NO_EMPTY);
+                $parts = Regex::split('/\R/', $value, -1, Matcher::NO_EMPTY);
                 echo implode(' ', $parts) . PHP_EOL;
             }
         }
