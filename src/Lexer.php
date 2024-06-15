@@ -82,8 +82,7 @@ class Lexer
             // Trim the junk from the match array.
             $result = array_filter(
                 $match,
-                static fn($value, $key): bool => ! is_numeric($key) &&
-                    strlen($value) > 0,
+                static fn($value, $key): bool => ! is_numeric($key) && strlen($value) > 0,
                 ARRAY_FILTER_USE_BOTH,
             );
 

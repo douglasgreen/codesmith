@@ -76,11 +76,7 @@ class LexerTest extends TestCase
         $input = '#0a #A0 #FFFFFF';
         $lexer = new Lexer($input);
 
-        $tokens = [
-            new Token('hex', '#0a'),
-            new Token('hex', '#A0'),
-            new Token('hex', '#FFFFFF'),
-        ];
+        $tokens = [new Token('hex', '#0a'), new Token('hex', '#A0'), new Token('hex', '#FFFFFF')];
 
         foreach ($tokens as $expectedToken) {
             $token = $lexer->getNextToken();

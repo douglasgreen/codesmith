@@ -2,13 +2,13 @@
 
 A valid file consists of one or more statements.
 
-A statement is an optional comment, followed by a word, followed by zero or more
-expressions, terminated with a semicolon or a block.
+A statement is an optional comment, followed by a word, followed by zero or more expressions,
+terminated with a semicolon or a block.
 
 An expression is a word, number, hexadecimal, string, list, map, or other mark.
 
-A word is an alphanumeric expression starting with a letter. A word can also be
-a series of words separated by dots, like obj.func or Name1.Name2.Name3.
+A word is an alphanumeric expression starting with a letter. A word can also be a series of words
+separated by dots, like obj.func or Name1.Name2.Name3.
 
 An number is a optionally signed integer or a float optionally followed by:
 
@@ -18,18 +18,14 @@ An number is a optionally signed integer or a float optionally followed by:
 
 A hexadecimal number starts with a # like #FF0.
 
-A block is a left curly brace, followed by one or more statements, followed by a
-right curly brace.
+A block is a left curly brace, followed by one or more statements, followed by a right curly brace.
 
-A list is a left parenthesis, followed by one or more expressions, followed by a
-right parenthesis.
+A list is a left parenthesis, followed by one or more expressions, followed by a right parenthesis.
 
-A map is a left square bracket, followed by one or more mappings, followed by a
-right square bracket. A mapping is a word followed by a colon followed by an
-expression.
+A map is a left square bracket, followed by one or more mappings, followed by a right square
+bracket. A mapping is a word followed by a colon followed by an expression.
 
-An other mark is a punctuation mark not used to mark a string, block, list, or
-map.
+An other mark is a punctuation mark not used to mark a string, block, list, or map.
 
 ## HTML Example
 
