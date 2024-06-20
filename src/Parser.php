@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Utility\Process\ParseException;
+use DouglasGreen\Utility\Logic\ParseException;
 
 class Parser
 {
