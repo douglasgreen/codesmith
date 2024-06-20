@@ -64,12 +64,8 @@
             "ecs --fix",
             "rector"
         ],
-        "post-install-cmd": [
-            "vendor/douglasgreen/config-setup/bin/copy_files.php"
-        ],
-        "post-update-cmd": [
-            "vendor/douglasgreen/config-setup/bin/copy_files.php"
-        ],
+        "post-install-cmd": "vendor/douglasgreen/config-setup/bin/copy_files.php",
+        "post-update-cmd": "vendor/douglasgreen/config-setup/bin/copy_files.php"
         "test": "phpunit"
     }
 }
