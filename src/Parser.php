@@ -292,7 +292,7 @@ class Parser
             $comment = $this->parseComment();
         }
 
-        $word = $this->parseWord();
+        $token = $this->parseWord();
 
         $expressions = [];
         $block = null;
@@ -310,7 +310,7 @@ class Parser
             $expressions[] = $this->parseExpression();
         }
 
-        return new Statement($comment, $word, $expressions, $block);
+        return new Statement($comment, $token, $expressions, $block);
     }
 
     /**

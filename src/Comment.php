@@ -6,6 +6,9 @@ namespace DouglasGreen\CodeSmith;
 
 use DouglasGreen\Utility\Regex\Regex;
 
+/**
+ * @see \DouglasGreen\CodeSmith\Tests\CommentTest
+ */
 class Comment
 {
     /**

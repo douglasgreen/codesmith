@@ -8,6 +8,9 @@ use DouglasGreen\Utility\Regex\Matcher;
 use DouglasGreen\Utility\Regex\Regex;
 use DouglasGreen\Utility\Regex\RegexException;
 
+/**
+ * @see \DouglasGreen\CodeSmith\Tests\LexerTest
+ */
 class Lexer
 {
     public const IS_VERBOSE = 1;
