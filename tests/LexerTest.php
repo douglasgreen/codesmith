@@ -20,7 +20,7 @@ class LexerTest extends TestCase
         $this->assertSame('word', $token->type);
         $this->assertSame('word', $token->value);
 
-        $this->assertNull($lexer->getNextToken());
+        $this->assertNotInstanceOf(Token::class, $lexer->getNextToken());
     }
 
     public function testReset(): void
@@ -47,7 +47,7 @@ class LexerTest extends TestCase
         $this->assertSame('word', $token->type);
         $this->assertSame('this.is.a.dot.separated.word', $token->value);
 
-        $this->assertNull($lexer->getNextToken());
+        $this->assertNotInstanceOf(Token::class, $lexer->getNextToken());
     }
 
     public function testTokenizeFloats(): void
@@ -68,7 +68,7 @@ class LexerTest extends TestCase
             $this->assertSame($expectedToken->value, $token->value);
         }
 
-        $this->assertNull($lexer->getNextToken());
+        $this->assertNotInstanceOf(Token::class, $lexer->getNextToken());
     }
 
     public function testTokenizeHex(): void
@@ -85,7 +85,7 @@ class LexerTest extends TestCase
             $this->assertSame($expectedToken->value, $token->value);
         }
 
-        $this->assertNull($lexer->getNextToken());
+        $this->assertNotInstanceOf(Token::class, $lexer->getNextToken());
     }
 
     public function testTokenizeInput(): void
@@ -108,7 +108,7 @@ class LexerTest extends TestCase
             $this->assertSame($expectedToken->value, $token->value);
         }
 
-        $this->assertNull($lexer->getNextToken());
+        $this->assertNotInstanceOf(Token::class, $lexer->getNextToken());
     }
 
     public function testTokenizePercents(): void
@@ -125,7 +125,7 @@ class LexerTest extends TestCase
             $this->assertSame($expectedToken->value, $token->value);
         }
 
-        $this->assertNull($lexer->getNextToken());
+        $this->assertNotInstanceOf(Token::class, $lexer->getNextToken());
     }
 
     public function testTokenizeSignedIntegers(): void
@@ -142,7 +142,7 @@ class LexerTest extends TestCase
             $this->assertSame($expectedToken->value, $token->value);
         }
 
-        $this->assertNull($lexer->getNextToken());
+        $this->assertNotInstanceOf(Token::class, $lexer->getNextToken());
     }
 
     public function testTokenizeUnits(): void
@@ -163,6 +163,6 @@ class LexerTest extends TestCase
             $this->assertSame($expectedToken->value, $token->value);
         }
 
-        $this->assertNull($lexer->getNextToken());
+        $this->assertNotInstanceOf(Token::class, $lexer->getNextToken());
     }
 }

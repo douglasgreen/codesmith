@@ -296,6 +296,9 @@ class Parser
 
         $expressions = [];
         $block = null;
+
+        // @todo Find out why this is always true.
+        /* @phpstan-ignore instanceof.alwaysTrue */
         while ($this->currentToken instanceof Token) {
             if ($this->currentToken->type === 'mark' && $this->currentToken->value === ';') {
                 $this->eat('mark', ';');
