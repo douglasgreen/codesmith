@@ -34,7 +34,6 @@
         "douglasgreen/utility": "^0.5"
     },
     "require-dev": {
-        "douglasgreen/config-setup": "dev-main",
         "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^11.5",
         "rector/rector": "^2.0",
@@ -47,14 +46,6 @@
             "DouglasGreen\\CodeSmith\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/douglasgreen/config-setup"
-        }
-    ],
     "config": {
         "sort-packages": true
     },
@@ -69,8 +60,6 @@
             "ecs --fix",
             "rector"
         ],
-        "post-install-cmd": "config_setup.php",
-        "post-update-cmd": "config_setup.php",
         "test": "phpunit"
     }
 }
