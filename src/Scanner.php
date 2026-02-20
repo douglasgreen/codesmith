@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Utility\Regex\Regex;
-
 class Scanner
 {
     /**
@@ -24,7 +22,7 @@ class Scanner
     {
         $line = 0;
         $column = 0;
-        $matches = Regex::matchAll('/[a-zA-Z_]+|\d+[ \t]|\R|./', $this->input);
+        preg_match_all('/[a-zA-Z_]+|\d+[ \t]|\R|./', $this->input, $matches);
         foreach ($matches[0] as $match) {
             $this->lexemes[] = new Lexeme($match, $line, $column);
             if ($match === PHP_EOL) {

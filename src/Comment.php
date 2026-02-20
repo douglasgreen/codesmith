@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Utility\Regex\Regex;
-
 /**
  * @see \DouglasGreen\CodeSmith\Tests\CommentTest
  */
@@ -33,15 +31,15 @@ class Comment
     protected function parseComment(): void
     {
         // Split into lines by any line break
-        $lines = Regex::split('/\R/', $this->comment);
+        $lines = preg_split('/\R/', $this->comment);
 
         // Process each line
         $processedLines = array_map(static function ($line): string {
             // Remove trailing */ characters
-            $line = Regex::replace('#\*/\s*$#', '', $line);
+            $line = preg_replace('#\*/\s*$#', '', $line);
 
             // Remove leading /*, /**, and * characters
-            $line = Regex::replace('#^\s*(/\*\*?|\*)#', '', $line);
+            $line = preg_replace('#^\s*(/\*\*?|\*)#', '', $line);
 
             return trim($line);
         }, $lines);

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Utility\Regex\Matcher;
-use DouglasGreen\Utility\Regex\Regex;
-use DouglasGreen\Utility\Regex\RegexException;
+use RuntimeException;
 
 /**
  * @see \DouglasGreen\CodeSmith\Tests\LexerTest
@@ -50,7 +48,7 @@ class Lexer
     }
 
     /**
-     * @throws RegexException
+     * @throws RuntimeException
      */
     protected function tokenize(): void
     {
@@ -78,7 +76,7 @@ class Lexer
         $result = preg_match_all($pattern, $this->input, $matches, PREG_SET_ORDER);
 
         if ($result === false) {
-            throw new RegexException('Failure to match tokens');
+            throw new RuntimeException('Failure to match tokens');
         }
 
         foreach ($matches as $match) {

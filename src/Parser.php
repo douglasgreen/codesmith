@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Utility\Logic\ParseException;
+use RuntimeException;
 
 class Parser
 {
@@ -35,27 +35,27 @@ class Parser
     /**
      * @param string|list<string> $value
      *
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function eat(string $tokenType, string|array $value = null): void
     {
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         if ($this->currentToken->type !== $tokenType) {
-            throw new ParseException('Unexpected token type: ' . json_encode($this->currentToken));
+            throw new RuntimeException('Unexpected token type: ' . json_encode($this->currentToken));
         }
 
         if ($value !== null) {
             if (is_string($value) && $this->currentToken->value !== $value) {
-                throw new ParseException(
+                throw new RuntimeException(
                     'Unexpected token literal: ' . json_encode($this->currentToken),
                 );
             }
 
             if (is_array($value) && ! in_array($this->currentToken->value, $value, true)) {
-                throw new ParseException(
+                throw new RuntimeException(
                     'Unexpected token value: ' . json_encode($this->currentToken),
                 );
             }
@@ -74,7 +74,7 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseBlock(): Block
     {
@@ -83,7 +83,7 @@ class Parser
         }
 
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $statements = [];
@@ -102,12 +102,12 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseComment(): Token
     {
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $value = $this->currentToken->value;
@@ -116,7 +116,7 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseExpression(): Expression
     {
@@ -125,7 +125,7 @@ class Parser
         }
 
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         switch ($this->currentToken->type) {
@@ -152,17 +152,17 @@ class Parser
                 }
                 // no break
             default:
-                throw new ParseException('Unknown expression: ' . json_encode($this->currentToken));
+                throw new RuntimeException('Unknown expression: ' . json_encode($this->currentToken));
         }
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseHex(): Token
     {
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $value = $this->currentToken->value;
@@ -171,7 +171,7 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseList(): ExprList
     {
@@ -180,7 +180,7 @@ class Parser
         }
 
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $expressions = [];
@@ -199,7 +199,7 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseMap(): ExprMap
     {
@@ -208,7 +208,7 @@ class Parser
         }
 
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $mappings = [];
@@ -227,7 +227,7 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseMapping(): Mapping
     {
@@ -236,7 +236,7 @@ class Parser
         }
 
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $token = $this->parseWord();
@@ -247,12 +247,12 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseNumber(): Token
     {
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $value = $this->currentToken->value;
@@ -261,12 +261,12 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseOtherMark(): Token
     {
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $value = $this->currentToken->value;
@@ -275,7 +275,7 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseStatement(): Statement
     {
@@ -284,7 +284,7 @@ class Parser
         }
 
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $comment = null;
@@ -317,12 +317,12 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseString(): Token
     {
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $value = $this->currentToken->value;
@@ -331,12 +331,12 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseWord(): Token
     {
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         $value = $this->currentToken->value;

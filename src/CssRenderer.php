@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace DouglasGreen\CodeSmith;
 
-use DouglasGreen\Utility\Data\ValueException;
+use Exception;
 
 class CssRenderer extends Renderer
 {
     /**
-     * @throws ValueException
+     * @throws Exception
      */
     public function render(): string
     {
@@ -28,7 +28,7 @@ class CssRenderer extends Renderer
                     echo '.';
                     break;
                 default:
-                    throw new ValueException('Invalid word: ' . $word->value);
+                    throw new Exception('Invalid word: ' . $word->value);
             }
 
             foreach ($statement->expressions as $expression) {
@@ -36,7 +36,7 @@ class CssRenderer extends Renderer
                 if ($expr instanceof Token) {
                     echo $expr->value;
                 } else {
-                    throw new ValueException('Invalid expression: ' . $expr::class);
+                    throw new Exception('Invalid expression: ' . $expr::class);
                 }
             }
         }
