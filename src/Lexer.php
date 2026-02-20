@@ -100,7 +100,7 @@ class Lexer
             } elseif (isset($result['mark'])) {
                 $type = 'mark';
             } else {
-                throw new RegexException('Unrecognized token type: ' . json_encode($result));
+                throw new RuntimeException('Unrecognized token type: ' . json_encode($result));
             }
 
             $value = $result[$type];
@@ -108,7 +108,7 @@ class Lexer
 
             if ($this->isVerbose) {
                 echo sprintf('Token: %s, Value: ', $type);
-                $parts = Regex::split('/\R/', $value, -1, Matcher::NO_EMPTY);
+                $parts = preg_split('/\R/', $value, -1, PREG_SPLIT_NO_EMPTY);
                 echo implode(' ', $parts) . PHP_EOL;
             }
         }
