@@ -1,6 +1,5 @@
 {
-  "_version": "1.1.0",
-  "_modified": "2026-02-22",
+  "modified": "2026-02-26",
   "name": "douglasgreen/codesmith",
   "description": "A file to read a simple universal syntax and write other languages",
   "type": "project",

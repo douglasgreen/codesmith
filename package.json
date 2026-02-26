@@ -1,14 +1,14 @@
 {
-  "_version": "1.1.0",
-  "_modified": "2026-02-22",
+  "modified": "2026-02-26",
   "name": "douglasgreen/codesmith",
   "version": "1.0.0",
   "description": "A file to read a simple universal syntax and write other languages",
   "type": "module",
   "scripts": {
     "lint": "npm run lint:md",
-    "lint:md": "markdownlint \"**/*.md\"",
-    "format": "prettier --write ."
+    "lint:md": "markdownlint '**/*.md'",
+    "format": "prettier --write . && markdownlint '**/*.md' --fix"
+
   },
   "devDependencies": {
     "markdownlint-cli": "^0.47.0",
